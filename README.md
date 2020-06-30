@@ -1,5 +1,4 @@
-# bitter
-# buffer
+# bitterbuffer
 
 ## Limitations
 - Buffer must be 4 Byte aligned. That means the buffer size will be either of 32 bit, 64 bit, 96 bit, 128 bit ...
