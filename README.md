@@ -1,5 +1,5 @@
 # bitterbuffer
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+[![MIT license](https://img.shields.io/badge/License-MIT-black.svg)](https://lbesson.mit-license.org/)
 
 ANSI C99, paddingless, flat, bit-level serializer/deserializer.
 
