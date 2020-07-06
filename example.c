@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <math.h>
 #include "debugging.h"
 
 /**
@@ -28,7 +29,14 @@ static bool setMoo(uint32_t * buffer, uint32_t val) {
     return true;
 }
 
-uint32_t buffer;
+static uint32_t getKoo(uint32_t * buffer) {
+    uint32_t fragment_low = (buffer[0u] >> 30) & 1u;
+    uint32_t fragment_hgh = (buffer[1u] >>  0) & 1u;
+
+    return pow(2u, 0u) * fragment_low + pow(2u, 1u) * fragment_hgh;
+}
+
+uint32_t buffer[2];
 
 int main() {
     /*const int number = 14;
@@ -36,28 +44,32 @@ int main() {
     printUInt32AsBinary(number);
     printf("hw\n");*/
 
-    // buffer = 0b0000 0000 0000 1101
-    buffer = 13;
-    printUInt32AsBinary(buffer);
+    // buffer = 0b1000 0000 0000 1101
+    buffer[0] = 2147483661;
+    buffer[1] = 1;
+    printUInt32AsBinary(buffer[0]);
+    printUInt32AsBinary(buffer[1]);
 
-    printf("Doo is: %u\n", getDoo(&buffer));
-    printf("Moo is: %u\n", getMoo(&buffer));
+    printf("Doo is: %u\n", getDoo(&buffer[0]));
+    printf("Moo is: %u\n", getMoo(&buffer[0]));
 
-    printUInt32AsBinary(buffer);
+    printUInt32AsBinary(buffer[0]);
 
-    bool success = setDoo(&buffer, 0u);
+    bool success = setDoo(&buffer[0], 0u);
     if(success) {
         printf("Doo successfully set to 0.\n");
     }
 
-    printUInt32AsBinary(buffer);
+    printUInt32AsBinary(buffer[0]);
 
-    success = setMoo(&buffer, 5u);
+    success = setMoo(&buffer[0], 5u);
     if(success) {
         printf("Moo successfully set to 5.\n");
     }
 
-    printUInt32AsBinary(buffer);
+    printUInt32AsBinary(buffer[0]);
+
+    printf("Koo is: %u\n", getKoo(buffer));
 
     return 0;
 }
