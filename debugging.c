@@ -38,3 +38,15 @@ void printUInt32AsBinary(uint32_t num) {
 
     printf("%s\n", binaryString);
 }
+
+void printBufferAsBinary(uint32_t *buffer, uint32_t bufferLength) {
+	printf("\n");
+	printf("===============================\n");
+	printf("Buffer content per 4-Byte block\n");
+	printf("-------------------------------\n");
+	for(int n=0; n < bufferLength; n++) {
+		printf("[%u]: ", n);
+		printUInt32AsBinary(buffer[n]);
+	}
+	printf("\n");
+}
