@@ -2,12 +2,15 @@
 First version only as draft for single example.
 '''
 import jinja2 as j2 
+import math
 
 if __name__ == '__main__':
 
     env = j2.Environment(
         loader=j2.FileSystemLoader(['./templates', './templates/snippets'])
     )
+
+    env.filters['ceil'] = math.ceil
 
     buffer_header_template = env.get_template('buffer.h.jinja');
     buffer_code_template = env.get_template('buffer.c.jinja');
@@ -36,4 +39,7 @@ if __name__ == '__main__':
     buffer = Buffer('testbuffername', 16)
     buffer.elements.append(BufferElement('Doo', 0, 0))
     buffer.elements.append(BufferElement('Moo', 1, 3))
+
+    print(buffer_code_template.render(buffer=buffer))
+    print(buffer_header_template.render(buffer=buffer))
 

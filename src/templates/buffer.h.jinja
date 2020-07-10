@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdint.h>
 
-typedef uint32_t[{{ceil(buffer.n_bytes / 4)}}] {{buffer.name}};
+typedef uint32_t[{{ (buffer.n_bytes / 4)|ceil }}] {{buffer.name}};
 
-{% import 'snippets/inblock_getset.txt' as inblock_el %}
-{% import 'snippets/crossblock_getset.txt' as xblock_el%}
+{% import './snippets/inblock_element.jinja' as inblock_el %}
+{% import './snippets/crossblock_element.jinja' as xblock_el%}
 
 {% for element in buffer.elements %}
     {% if (element.end_bit // 32) == (element.start_bit // 32) %}
-        {% inblock_el.get_function_header(element) %}
+        {{ inblock_el.get_function_header(element) }}
     {% elif (element.end_bit // 32) == (element.start_bit // 32 + 1) %}
-        {% xblock_el.get_function_header(element) %}
+        {{ xblock_el.get_function_header(element) }}
     {% endif %}
 {% endfor %}
