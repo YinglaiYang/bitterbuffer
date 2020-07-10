@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <math.h>
+
+{% import 'snippets/inblock_getset.txt' as inblock_el %}
+{% import 'snippets/crossblock_getset.txt' as xblock_el%}
+
+{% for element in buffer %}
+    {% if (element.end_bit // 32) == (element.start_bit // 32) %}
+        {% inblock_el.get_function(element) %}
+    {% elif (element.end_bit // 32) == (element.start_bit // 32 + 1) %}
+        {% xblock_el.get_function(element) %}
+    {% endif %}
+{% endfor %}
+

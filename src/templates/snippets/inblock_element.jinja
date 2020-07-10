@@ -1,0 +1,41 @@
+
+{% macro get_function_header(el) -%}
+
+static uint32_t get_{{el.name}}(uint32_t *buffer);
+
+{%- endmacro %}
+
+
+{% macro get_function(el) -%}
+    {% set block_to_load = el.start_bit // 32 %}
+    {% set start_offset = el.start_bit % 32 %}
+    {% set bitmask_selector = 2**(el.start_bit - el.end_bit + 1) - 1 %}
+
+static uint32_t get_{{el.name}}(uint32_t *buffer) {
+    return ( *buffer[ {{block_to_load}} ] >> {{start_offset}} ) & {{bitmask_selector}}u;
+}
+
+{%- endmacro %}
+
+
+
+
+{% macro set_function(el) -%}
+
+static bool set_{{el.name}}(uint32_t *buffer, uint32_t val);
+
+{%- endmacro%}
+
+
+{% macro set_function(el) -%}
+    {% set block_to_load = el.start_bit // 32 %}
+    {% set start_offset = el.start_bit % 32 %}
+    {% set bitmask_deselector = 2**(el.start_bit - el.end_bit) - 1 %}
+
+static bool set_{{el.name}}(uint32_t *buffer, uint32_t val) {
+    *buffer = (*buffer & 0xFFFFFFF1) | (val << {{start_offset}}u);
+
+    return true;
+}
+
+{%- endmacro %}
