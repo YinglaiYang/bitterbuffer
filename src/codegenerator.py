@@ -36,10 +36,10 @@ if __name__ == '__main__':
             self.start_bit = start_bit
             self.end_bit   = end_bit
 
-    buffer = Buffer('testbuffername', 16)
+    buffer = Buffer('examplebuff', 16)
     buffer.elements.append(BufferElement('Doo', 0, 0))
     buffer.elements.append(BufferElement('Moo', 1, 3))
 
-    print(buffer_code_template.render(buffer=buffer))
-    print(buffer_header_template.render(buffer=buffer))
+    buffer_header_template.stream(buffer=buffer).dump('../out/{}.h'.format(buffer.name))
+    buffer_code_template.stream(buffer=buffer).dump('../out/{}.c'.format(buffer.name))
 
